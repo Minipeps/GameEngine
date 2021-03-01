@@ -1,0 +1,9 @@
+# IDE
+.vs
+.vscode
+
+# Build files
+[Bb]uild/
+
+# Third Parties
+third_party
