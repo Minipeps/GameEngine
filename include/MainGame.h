@@ -5,19 +5,21 @@
 
 #include "SDL.h"
 
-#include <string>
+#include <deque>
+#include <memory>
 #include <vector>
 
-enum class GameState {PLAY, EXIT};
+namespace Engine {
+
+enum class GameState { PLAY, EXIT };
 
 class MainGame
 {
 public:
-    MainGame(const std::string& assetFolderPath);
-    ~MainGame();
-    
+    MainGame( const std::string& assetFolderPath );
+
     void run();
-    
+
 private:
     void initSystems();
     void initShaders();
@@ -25,7 +27,7 @@ private:
     void processInput();
     void drawGame();
     void calculateFPS();
-    
+
     SDL_Window* _window;
     int _screenWidth;
     int _screenHeight;
@@ -33,15 +35,17 @@ private:
 
     std::string _assetFolder;
     std::string _shaderFolder;
-    
+
     std::vector<Sprite*> _sprites;
-    
+
     GLSLProgram _colorProgram;
-    
+
     float _fps;
     float _maxFps;
-    float _frameTime;
-    
+    float _prevFrameTicks;
+    std::deque<float> _frameTimes;
+
     float _time;
 };
 
+} // namespace Engine

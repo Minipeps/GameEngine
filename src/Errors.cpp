@@ -1,17 +1,20 @@
 #include "Errors.h"
 
-#include <cstdlib>
-
 #include "SDL.h"
 
 #include <iostream>
 
-//Prints out an error message and exits the game
-void fatalError(std::string errorString) {
+namespace Engine {
+
+// Prints out an error message and exits the game
+void fatalError( std::string errorString )
+{
     std::cout << errorString << std::endl;
     std::cout << "Enter any key to quit...";
     int tmp;
     std::cin >> tmp;
     SDL_Quit();
-    exit(-1);
-} 
+    exit( -1 );
+}
+
+} // namespace Engine

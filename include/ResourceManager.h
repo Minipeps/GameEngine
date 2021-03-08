@@ -3,12 +3,14 @@
 #include "TextureCache.h"
 #include "GLTexture.h"
 
-
+namespace Engine {
 class ResourceManager
 {
 public:
-    static GLTexture getTexture(std::string texturePath);
-    
+    static GLTexture getTexture( std::string texturePath );
+
 private:
     static TextureCache _textureCache;
 };
+
+} // namespace Engine
