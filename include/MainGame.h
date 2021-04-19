@@ -1,22 +1,25 @@
 #pragma once
 
-#include "GLSLProgram.h"
-#include "Sprite.h"
-
-#include "SDL.h"
-
 #include <deque>
 #include <memory>
 #include <vector>
 
-namespace Engine {
+#include "GLSLProgram.h"
+#include "SDL.h"
+#include "Sprite.h"
 
-enum class GameState { PLAY, EXIT };
+namespace Engine
+{
+enum class GameState
+{
+    PLAY,
+    EXIT
+};
 
 class MainGame
 {
 public:
-    MainGame( const std::string& assetFolderPath );
+    MainGame(const std::string &assetFolderPath);
 
     void run();
 
@@ -28,7 +31,7 @@ private:
     void drawGame();
     void calculateFPS();
 
-    SDL_Window* _window;
+    SDL_Window *_window;
     int _screenWidth;
     int _screenHeight;
     GameState _gameState;
@@ -36,7 +39,7 @@ private:
     std::string _assetFolder;
     std::string _shaderFolder;
 
-    std::vector<Sprite*> _sprites;
+    std::vector<Sprite *> _sprites;
 
     GLSLProgram _colorProgram;
 

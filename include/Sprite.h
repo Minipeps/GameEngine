@@ -1,11 +1,11 @@
 #pragma once
 
-#include "GLTexture.h"
-
 #include <string>
 
-namespace Engine {
+#include "GLTexture.h"
 
+namespace Engine
+{
 // A 2D quad that can be rendered to the screen
 class Sprite
 {
@@ -13,7 +13,7 @@ public:
     Sprite();
     ~Sprite();
 
-    void init( float x, float y, float width, float height, const std::string& texturePath );
+    void init(float x, float y, float width, float height, const std::string &texturePath);
 
     void draw();
 

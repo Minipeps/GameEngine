@@ -2,8 +2,8 @@
 
 #include <string>
 
-namespace Engine {
-
+namespace Engine
+{
 extern void fatalError(std::string errorString);
 
 } // namespace Engine

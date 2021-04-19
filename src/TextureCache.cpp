@@ -1,20 +1,20 @@
 #include "TextureCache.h"
 
-#include "ImageLoader.h"
-
 #include <iostream>
 
-namespace Engine {
+#include "ImageLoader.h"
 
-GLTexture TextureCache::getTexture( const std::string& texturePath )
+namespace Engine
 {
-    auto mit = _textureMap.find( texturePath );
+GLTexture TextureCache::getTexture(const std::string &texturePath)
+{
+    auto mit = _textureMap.find(texturePath);
 
     if (mit == _textureMap.end())
     {
-        GLTexture newTexture = ImageLoader::loadPNG( texturePath );
+        GLTexture newTexture = ImageLoader::loadPNG(texturePath);
 
-        _textureMap.insert( make_pair( texturePath, newTexture ) );
+        _textureMap.insert(make_pair(texturePath, newTexture));
 
         std::cout << "Loaded texture !" << std::endl;
         return newTexture;

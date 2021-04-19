@@ -2,8 +2,16 @@
 .vs
 .vscode
 
+# Sonar
+.scannerwork/
+
 # Build files
 [Bb]uild/
 
 # Third Parties
 third_party
+
+# User file
+*.txt
+*.properties
+*.bat
