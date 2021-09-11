@@ -7,28 +7,30 @@
 
 namespace Engine
 {
-GLTexture ImageLoader::loadPNG(std::string filePath)
+GLTexture ImageLoader::loadPNG(const std::string &filePath)
 {
     GLTexture texture;
 
     std::vector<unsigned char> inData;
     std::vector<unsigned char> outData;
-    unsigned long width, height;
+    unsigned long width;
+    unsigned long height;
 
     if (!IOManager::readFileToBuffer(filePath, inData))
     {
         fatalError("failed to load PNG file to buffer !");
-    };
+    }
 
-    int errorCode = decodePNG(outData, width, height, &(inData[0]), inData.size());
-    if (errorCode != 0)
+    if (int errorCode = decodePNG(outData, width, height, &inData.front(), inData.size());
+        errorCode != 0)
     {
         fatalError("decodePNG failed with error : " + std::to_string(errorCode));
     }
 
     glGenTextures(1, &texture.id);
     glBindTexture(GL_TEXTURE_2D, texture.id);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<int>(width), static_cast<int>(height), 0, GL_RGBA, GL_UNSIGNED_BYTE, &(outData[0]));
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 &outData.front());
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -39,8 +41,8 @@ GLTexture ImageLoader::loadPNG(std::string filePath)
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    texture.width = static_cast<int>(width);
-    texture.height = static_cast<int>(height);
+    texture.width = width;
+    texture.height = height;
 
     return texture;
 }

@@ -13,28 +13,29 @@ namespace Engine
 class GLSLProgram
 {
 public:
-    GLSLProgram();
+    GLSLProgram() = default;
 
-    void compileShaders(const std::string &vertexShaderFilePath, const std::string &fragmentShaderFilepath);
+    void compileShaders(const std::string &vertexShaderFilePath,
+                        const std::string &fragmentShaderFilepath);
 
-    void linkShaders();
+    void linkShaders() const;
 
     void addAttribute(const std::string &attributeName);
 
-    GLuint getUniformLocation(const std::string &uniformName);
+    GLuint getUniformLocation(const std::string &uniformName) const;
 
-    void use();
-    void unuse();
+    void use() const;
+    void unuse() const;
 
 private:
-    void compileShader(const std::string &filePath, GLuint id);
+    void compileShader(const std::string &filePath, GLuint id) const;
 
-    int m_numAttributes;
+    int m_numAttributes{0};
 
-    GLuint m_programID;
+    GLuint m_programID{0};
 
-    GLuint m_fragmentShaderID;
-    GLuint m_vertexShaderID;
+    GLuint m_fragmentShaderID{0};
+    GLuint m_vertexShaderID{0};
 };
 
 } // namespace Engine

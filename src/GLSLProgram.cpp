@@ -7,14 +7,9 @@
 
 namespace Engine
 {
-GLSLProgram::GLSLProgram() : m_numAttributes(0),
-                             m_programID(0),
-                             m_vertexShaderID(0),
-                             m_fragmentShaderID(0)
-{
-}
 
-void GLSLProgram::compileShaders(const std::string &vertexShaderFilePath, const std::string &fragmentShaderFilepath)
+void GLSLProgram::compileShaders(const std::string &vertexShaderFilePath,
+                                 const std::string &fragmentShaderFilepath)
 {
     // Get a program object.
     m_programID = glCreateProgram();
@@ -38,7 +33,7 @@ void GLSLProgram::compileShaders(const std::string &vertexShaderFilePath, const 
     compileShader(fragmentShaderFilepath, m_fragmentShaderID);
 }
 
-void GLSLProgram::linkShaders()
+void GLSLProgram::linkShaders() const
 {
     // Attach our shaders to our program
     glAttachShader(m_programID, m_vertexShaderID);
@@ -49,7 +44,7 @@ void GLSLProgram::linkShaders()
 
     // Note the different functions here: glGetProgram* instead of glGetShader*.
     GLint isLinked = 0;
-    glGetProgramiv(m_programID, GL_LINK_STATUS, (int *)&isLinked);
+    glGetProgramiv(m_programID, GL_LINK_STATUS, &isLinked);
     if (isLinked == GL_FALSE)
     {
         GLint maxLength = 0;
@@ -83,7 +78,7 @@ void GLSLProgram::addAttribute(const std::string &attributeName)
     glBindAttribLocation(m_programID, m_numAttributes++, attributeName.c_str());
 }
 
-GLuint GLSLProgram::getUniformLocation(const std::string &uniformName)
+GLuint GLSLProgram::getUniformLocation(const std::string &uniformName) const
 {
     GLuint location = glGetUniformLocation(m_programID, uniformName.c_str());
     if (location == GL_INVALID_INDEX)
@@ -94,7 +89,7 @@ GLuint GLSLProgram::getUniformLocation(const std::string &uniformName)
 }
 
 // enable the shader, and all its attributes
-void GLSLProgram::use()
+void GLSLProgram::use() const
 {
     glUseProgram(m_programID);
     // enable all the attributes we added with addAttribute
@@ -105,7 +100,7 @@ void GLSLProgram::use()
 }
 
 // disable the shader
-void GLSLProgram::unuse()
+void GLSLProgram::unuse() const
 {
     glUseProgram(0);
     for (int i = 0; i < m_numAttributes; i++)
@@ -115,7 +110,7 @@ void GLSLProgram::unuse()
 }
 
 // Compiles a single shader file
-void GLSLProgram::compileShader(const std::string &filePath, GLuint id)
+void GLSLProgram::compileShader(const std::string &filePath, GLuint id) const
 {
     // Open the file
     std::ifstream shaderFile(filePath);
@@ -138,7 +133,7 @@ void GLSLProgram::compileShader(const std::string &filePath, GLuint id)
 
     shaderFile.close();
 
-    // get a pointer to our file contents c string;
+    // get a pointer to our file contents c string
     const char *contentsPtr = fileContents.c_str();
     // tell opengl that we want to use fileContents as the contents of the shader file
     glShaderSource(id, 1, &contentsPtr, nullptr);

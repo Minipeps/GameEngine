@@ -6,20 +6,25 @@ namespace Engine
 {
 struct Position
 {
-    float x, y;
+    float x;
+    float y;
 };
 
 struct Color
 {
-    GLubyte r, g, b, a;
+    GLubyte r;
+    GLubyte g;
+    GLubyte b;
+    GLubyte a;
 };
 
 struct UV
 {
-    float u, v;
+    float u;
+    float v;
 };
 
-//The vertex definition
+// The vertex definition
 struct Vertex
 {
     // This is the position struct. When you store a struct or class

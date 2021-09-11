@@ -8,14 +8,9 @@
 
 namespace Engine
 {
-// Constructor, just initializes private member variables
-MainGame::MainGame(const std::string &assetFolderPath) : m_screenWidth(1024),
-                                                         m_screenHeight(768),
-                                                         m_gameState(GameState::PLAY),
-                                                         m_assetFolder(assetFolderPath),
-                                                         m_shaderFolder(m_assetFolder + "shaders/"),
-                                                         m_maxFps(165),
-                                                         m_time(0)
+
+MainGame::MainGame(const std::string &assetFolderPath)
+    : m_assetFolder(assetFolderPath), m_shaderFolder(m_assetFolder + "shaders/")
 {
 }
 
@@ -24,18 +19,15 @@ void MainGame::run()
 {
     initSystems();
 
-    // Initialize our sprite. (temporary)
-    m_sprites.push_back(new Sprite());
-    m_sprites.back()->init(-1.0f, -1.0f, 1.0f, 1.0f, m_assetFolder + "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+    // Initialize our sprites
+    const auto spriteSource =
+        m_assetFolder + "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png";
 
-    m_sprites.push_back(new Sprite());
-    m_sprites.back()->init(0.0f, 0.0f, 1.0f, 1.0f, m_assetFolder + "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
-
-    m_sprites.push_back(new Sprite());
-    m_sprites.back()->init(0.0f, -1.0f, 1.0f, 1.0f, m_assetFolder + "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
-
-    m_sprites.push_back(new Sprite());
-    m_sprites.back()->init(-1.0f, 0.0f, 1.0f, 1.0f, m_assetFolder + "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+    for (int i = 0; i < 4; ++i)
+    {
+        auto &sprite = m_sprites.emplace_back(new Sprite());
+        sprite->init(i < 2 ? -1.f : 0.f, i % 2 ? -1.f : 0.f, 1.0f, 1.0f, spriteSource);
+    }
 
     // This only returns when the game ends
     gameLoop();
@@ -52,7 +44,8 @@ void MainGame::initSystems()
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     // Open an SDL window
-    m_window = SDL_CreateWindow("Game Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_screenWidth, m_screenHeight, SDL_WINDOW_OPENGL);
+    m_window = SDL_CreateWindow("Game Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                m_screenWidth, m_screenHeight, SDL_WINDOW_OPENGL);
     if (!m_window)
     {
         fatalError("SDL Window could not be created!");
@@ -61,8 +54,7 @@ void MainGame::initSystems()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     // Set up our OpenGL context
-    SDL_GLContext glContext = SDL_GL_CreateContext(m_window);
-    if (!glContext)
+    if (SDL_GLContext glContext = SDL_GL_CreateContext(m_window); !glContext)
     {
         fatalError("SDL_GL context could not be created!");
     }
@@ -91,7 +83,8 @@ void MainGame::initSystems()
 
 void MainGame::initShaders()
 {
-    m_colorProgram.compileShaders(m_shaderFolder + "colorShading.vert", m_shaderFolder + "colorShading.frag");
+    m_colorProgram.compileShaders(m_shaderFolder + "colorShading.vert",
+                                  m_shaderFolder + "colorShading.frag");
     m_colorProgram.addAttribute("vertexPosition");
     m_colorProgram.addAttribute("vertexColor");
     m_colorProgram.addAttribute("vertexUV");
@@ -134,6 +127,9 @@ void MainGame::processInput()
             m_gameState = GameState::EXIT;
             break;
         case SDL_MOUSEMOTION:
+            // TODO: Handle mouse inputs
+            break;
+        default:
             break;
         }
     }

@@ -19,7 +19,7 @@ enum class GameState
 class MainGame
 {
 public:
-    MainGame(const std::string &assetFolderPath);
+    explicit MainGame(const std::string &assetFolderPath);
 
     void run();
 
@@ -32,9 +32,9 @@ private:
     void calculateFPS();
 
     SDL_Window *m_window;
-    int m_screenWidth;
-    int m_screenHeight;
-    GameState m_gameState;
+    int m_screenWidth{1024};
+    int m_screenHeight{768};
+    GameState m_gameState{GameState::PLAY};
 
     std::string m_assetFolder;
     std::string m_shaderFolder;
@@ -44,11 +44,11 @@ private:
     GLSLProgram m_colorProgram;
 
     uint32_t m_fps;
-    uint32_t m_maxFps;
+    uint32_t m_maxFps{165};
     uint32_t m_prevFrameTicks;
     std::deque<uint32_t> m_frameTimes;
 
-    float m_time;
+    float m_time{0.f};
 };
 
 } // namespace Engine

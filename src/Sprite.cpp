@@ -3,10 +3,10 @@
 #include "ResourceManager.h"
 #include "Vertex.h"
 
+#include <array>
+
 namespace Engine
 {
-Sprite::Sprite() : m_vboID(0) {}
-
 Sprite::~Sprite()
 {
     // Always remember to delete your buffers when
@@ -38,7 +38,7 @@ void Sprite::init(float x, float y, float width, float height, const std::string
     // This array will hold our vertex data.
     // We need 6 vertices, and each vertex has 2
     // floats for X and Y components
-    Vertex vertexData[6];
+    std::array<Vertex, 6> vertexData;
 
     // First Triangle
     vertexData[0].setPosition(x + width, y + height);
@@ -73,14 +73,14 @@ void Sprite::init(float x, float y, float width, float height, const std::string
     // Tell opengl to bind our vertex buffer object
     glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
     // Upload the data to the GPU
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
 
     // Unbind the buffer (optional)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 // Draws the sprite to the screen
-void Sprite::draw()
+void Sprite::draw() const
 {
     glBindTexture(GL_TEXTURE_2D, m_texture.id);
 

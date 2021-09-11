@@ -10,19 +10,18 @@ namespace Engine
 class Sprite
 {
 public:
-    Sprite();
     ~Sprite();
 
     void init(float x, float y, float width, float height, const std::string &texturePath);
 
-    void draw();
+    void draw() const;
 
 private:
     float m_x;
     float m_y;
     float m_width;
     float m_height;
-    GLuint m_vboID;
+    GLuint m_vboID{0};
     GLTexture m_texture;
 };
 

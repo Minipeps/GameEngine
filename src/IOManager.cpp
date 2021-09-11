@@ -4,7 +4,7 @@
 
 namespace Engine
 {
-bool IOManager::readFileToBuffer(std::string filePath, std::vector<unsigned char> &buffer)
+bool IOManager::readFileToBuffer(const std::string &filePath, std::vector<unsigned char> &buffer)
 {
     std::ifstream file(filePath, std::ios::binary);
     if (file.fail())

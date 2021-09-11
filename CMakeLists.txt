@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.18)
 
 project(GameEngine VERSION 0.0.1)
 
+# Compiler options
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+
 # Third Parties
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} third_party/packages/SDL2)

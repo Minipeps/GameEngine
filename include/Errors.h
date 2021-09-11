@@ -4,6 +4,6 @@
 
 namespace Engine
 {
-extern void fatalError(std::string errorString);
+extern void fatalError(const std::string &errorString);
 
 } // namespace Engine
