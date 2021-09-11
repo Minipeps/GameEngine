@@ -8,13 +8,13 @@ namespace Engine
 {
 GLTexture TextureCache::getTexture(const std::string &texturePath)
 {
-    auto mit = _textureMap.find(texturePath);
+    auto mit = m_textureMap.find(texturePath);
 
-    if (mit == _textureMap.end())
+    if (mit == m_textureMap.end())
     {
         GLTexture newTexture = ImageLoader::loadPNG(texturePath);
 
-        _textureMap.insert(make_pair(texturePath, newTexture));
+        m_textureMap.insert(make_pair(texturePath, newTexture));
 
         std::cout << "Loaded texture !" << std::endl;
         return newTexture;

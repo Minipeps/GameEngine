@@ -5,15 +5,15 @@
 
 namespace Engine
 {
-Sprite::Sprite() : _vboID(0) {}
+Sprite::Sprite() : m_vboID(0) {}
 
 Sprite::~Sprite()
 {
     // Always remember to delete your buffers when
     // you are done!
-    if (_vboID)
+    if (m_vboID)
     {
-        glDeleteBuffers(1, &_vboID);
+        glDeleteBuffers(1, &m_vboID);
     }
 }
 
@@ -22,17 +22,17 @@ Sprite::~Sprite()
 void Sprite::init(float x, float y, float width, float height, const std::string &texturePath)
 {
     // Set up our private vars
-    _x = x;
-    _y = y;
-    _width = width;
-    _height = height;
+    m_x = x;
+    m_y = y;
+    m_width = width;
+    m_height = height;
 
-    _texture = ResourceManager::getTexture(texturePath);
+    m_texture = ResourceManager::getTexture(texturePath);
 
     // Generate the buffer if it hasn't already been generated
-    if (!_vboID)
+    if (!m_vboID)
     {
-        glGenBuffers(1, &_vboID);
+        glGenBuffers(1, &m_vboID);
     }
 
     // This array will hold our vertex data.
@@ -71,7 +71,7 @@ void Sprite::init(float x, float y, float width, float height, const std::string
     vertexData[4].setColor(0, 255, 0, 255);
 
     // Tell opengl to bind our vertex buffer object
-    glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
     // Upload the data to the GPU
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
@@ -82,10 +82,10 @@ void Sprite::init(float x, float y, float width, float height, const std::string
 // Draws the sprite to the screen
 void Sprite::draw()
 {
-    glBindTexture(GL_TEXTURE_2D, _texture.id);
+    glBindTexture(GL_TEXTURE_2D, m_texture.id);
 
     // Bind the buffer object
-    glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
 
     // Tell opengl that we want to use the first
     // attribute array. We only need one array right

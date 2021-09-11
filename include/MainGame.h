@@ -31,24 +31,24 @@ private:
     void drawGame();
     void calculateFPS();
 
-    SDL_Window *_window;
-    int _screenWidth;
-    int _screenHeight;
-    GameState _gameState;
+    SDL_Window *m_window;
+    int m_screenWidth;
+    int m_screenHeight;
+    GameState m_gameState;
 
-    std::string _assetFolder;
-    std::string _shaderFolder;
+    std::string m_assetFolder;
+    std::string m_shaderFolder;
 
-    std::vector<Sprite *> _sprites;
+    std::vector<Sprite *> m_sprites;
 
-    GLSLProgram _colorProgram;
+    GLSLProgram m_colorProgram;
 
-    float _fps;
-    float _maxFps;
-    float _prevFrameTicks;
-    std::deque<float> _frameTimes;
+    uint32_t m_fps;
+    uint32_t m_maxFps;
+    uint32_t m_prevFrameTicks;
+    std::deque<uint32_t> m_frameTimes;
 
-    float _time;
+    float m_time;
 };
 
 } // namespace Engine

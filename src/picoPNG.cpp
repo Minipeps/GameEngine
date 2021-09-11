@@ -163,7 +163,7 @@ int decodePNG(std::vector<unsigned char> &out_image, unsigned long &image_width,
                 treeD.makeFromLengths(bitlenD, 15);
             }
             HuffmanTree codetree, codetreeD, codelengthcodetree; //the code tree for Huffman codes, dist codes, and code length codes
-            unsigned long huffmanDecodeSymbol(const unsigned char *in, size_t &bp, const HuffmanTree &codetree, size_t inlength)
+            unsigned long huffmanDecodeSymbol(const unsigned char *in, size_t &bp, const HuffmanTree &p_codetree, size_t inlength)
             { //decode a single symbol from given list of bits with given code tree. return value is the symbol
                 bool decoded;
                 unsigned long ct;
@@ -174,7 +174,7 @@ int decodePNG(std::vector<unsigned char> &out_image, unsigned long &image_width,
                         error = 10;
                         return 0;
                     } //error: end reached without endcode
-                    error = codetree.decode(decoded, ct, treepos, readBitFromStream(bp, in));
+                    error = p_codetree.decode(decoded, ct, treepos, readBitFromStream(bp, in));
                     if (error)
                         return 0; //stop, an error happened
                     if (decoded)
@@ -765,14 +765,14 @@ int decodePNG(std::vector<unsigned char> &out_image, unsigned long &image_width,
             else
                 return 31; //unexisting color type
         }
-        unsigned long getBpp(const Info &info)
+        unsigned long getBpp(const Info &p_info)
         {
-            if (info.colorType == 2)
-                return (3 * info.bitDepth);
-            else if (info.colorType >= 4)
-                return (info.colorType - 2) * info.bitDepth;
+            if (p_info.colorType == 2)
+                return (3 * p_info.bitDepth);
+            else if (p_info.colorType >= 4)
+                return (p_info.colorType - 2) * p_info.bitDepth;
             else
-                return info.bitDepth;
+                return p_info.bitDepth;
         }
         int convert(std::vector<unsigned char> &out, const unsigned char *in, Info &infoIn, unsigned long w, unsigned long h)
         { //converts from any color type to 32-bit. return value = LodePNG error code

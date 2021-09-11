@@ -29,12 +29,12 @@ public:
 private:
     void compileShader(const std::string &filePath, GLuint id);
 
-    int _numAttributes;
+    int m_numAttributes;
 
-    GLuint _programID;
+    GLuint m_programID;
 
-    GLuint _fragmentShaderID;
-    GLuint _vertexShaderID;
+    GLuint m_fragmentShaderID;
+    GLuint m_vertexShaderID;
 };
 
 } // namespace Engine

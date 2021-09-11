@@ -18,12 +18,12 @@ public:
     void draw();
 
 private:
-    float _x;
-    float _y;
-    float _width;
-    float _height;
-    GLuint _vboID;
-    GLTexture _texture;
+    float m_x;
+    float m_y;
+    float m_width;
+    float m_height;
+    GLuint m_vboID;
+    GLTexture m_texture;
 };
 
 } // namespace Engine
